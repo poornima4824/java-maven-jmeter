@@ -22,12 +22,12 @@ public class LoginPage {
     /**
      * @param userName
      * @param password
+     * TODO: Implement assignment specific login method
      */
     public void login(String userName, String password) {
-        //ENTER LOGIN INFORMATION SPECIFIC TO YOUR SITUATION HERE
-        driver.findElement(By.cssSelector("input[type=username]")).sendKeys(userName);
-        driver.findElement(By.cssSelector("input[type=password]")).sendKeys(password);
-        driver.findElement(By.cssSelector("input[type=submit")).click();
+//        driver.findElement(By.cssSelector("input[type=username]")).sendKeys(userName);
+//        driver.findElement(By.cssSelector("input[type=password]")).sendKeys(password);
+//        driver.findElement(By.cssSelector("input[type=submit")).click();
     }
 
 }

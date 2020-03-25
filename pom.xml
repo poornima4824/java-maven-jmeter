@@ -70,7 +70,7 @@
                         <version>3.0.0-M3</version>
                         <configuration>
                             <includes>
-                                <include>SetupJMeterForT3stEnv.java</include>
+                                <include>SetupJmeter.java</include>
                             </includes>
                         </configuration>
                     </plugin>

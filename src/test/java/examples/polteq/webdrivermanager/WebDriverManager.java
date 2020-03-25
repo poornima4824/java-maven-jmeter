@@ -6,6 +6,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -15,6 +19,8 @@ import java.util.Set;
 import static examples.polteq.Constants.hubUrl;
 
 public class WebDriverManager {
+
+    private static WebDriver driver;
 
     /**
      * Gets the remote WebDriver from the Selenium Hub.
@@ -33,7 +39,8 @@ public class WebDriverManager {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        return remoteWebDriver;
+        driver = remoteWebDriver;
+        return driver;
     }
 
     /**
@@ -51,6 +58,44 @@ public class WebDriverManager {
             restAssuredCookies.add(new Cookie.Builder(cookie.getName(), cookie.getValue()).build());
         }
         return new Cookies(restAssuredCookies);
+    }
+
+    /**
+     * Writes a Cookies.txt file in target dir.
+     *
+     * @param driver
+     */
+    public static void setCookiesInJmeterFormat(WebDriver driver) {
+        // create file named Cookies to store Login Information
+        File file = new File("target/cookies.txt");
+        try {
+            // Delete old file if exists
+            file.delete();
+            file.createNewFile();
+            FileWriter fileWrite = new FileWriter(file);
+            BufferedWriter Bwrite = new BufferedWriter(fileWrite);
+            String cookieString;
+
+            // loop for getting the cookie information
+            for (Cookie ck : driver.manage().getCookies()) {
+                if (ck.getExpiry() == null) {
+                    cookieString = ck.getDomain() + "\t true \t" + ck.getPath() + "\t" + ck.isSecure() + "\t" +
+                            2000000000000L + "\t" + ck.getName() + "\t" + ck.getValue();
+                } else {
+                    cookieString = ck.getDomain() + "\t true \t" + ck.getPath() + "\t" + ck.isSecure() + "\t" +
+                            ck.getExpiry().getTime() + "\t" + ck.getName() + "\t" + ck.getValue();
+                }
+
+                cookieString = cookieString.replaceAll("null", "").trim();
+                Bwrite.write(cookieString);
+                Bwrite.newLine();
+            }
+            Bwrite.close();
+            fileWrite.close();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }
