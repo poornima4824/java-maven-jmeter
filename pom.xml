@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <jmxFile></jmxFile>
+        <jmxFile>examples-polteq-performance-test</jmxFile>
     </properties>
 
     <dependencies>
@@ -59,8 +59,9 @@
     </dependencies>
 
     <profiles>
+        <!--Use of profile is intentional so that project is easily scalable by adding other profiles-->
         <profile>
-            <id>test-choose-jmx-file</id>
+            <id>choose-jmx-file</id>
             <build>
                 <plugins>
                     <plugin>

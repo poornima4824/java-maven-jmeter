@@ -1,0 +1,30 @@
+pipeline {
+
+    // This Jenkinsfile shows how to use the same project with a fixed jmx file.
+    // This can be useful when you want to run builds with periodic triggers using cron jobs.
+
+    //Agent will differ per assignment
+    agent { label 'jenkins-maven' }
+
+    //Credentials should be added in Jenkins
+    environment {
+        TEST_ENV = credentials('testEnv')
+    }
+
+    stages {
+        stage('Performance test...') {
+            steps {
+                //Run tests
+                sh("mvn clean verify -P choose-jmx-file -DjmxFile=examples-polteq-performance-test -DtestEnvUsr=${env.TEST_ENV_USR} -DtestEnvPwd=${env.TEST_ENV_PSW}")
+            }
+        }
+    }
+    post {
+        //Archive artifacts is a plugin that enables you to store for instance the target folder of a build.
+        //PerfReport is a plugin that can be added to Jenkins, making nice graphs and showing trends.
+        always {
+            archiveArtifacts artifacts: 'target/**/*.*', excludes: 'target/test-classes/**/*.*', fingerprint: true
+            perfReport sourceDataFiles: 'target/jmeter/results/*.csv'
+        }
+    }
+}
