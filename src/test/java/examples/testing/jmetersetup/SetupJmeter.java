@@ -1,21 +1,14 @@
 package examples.testing.jmetersetup;
 
 import examples.testing.Constants;
+import examples.testing.GeneralTest;
 import examples.testing.abstraction.LoginPage;
-import examples.testing.helpers.FileHelper;
 import examples.testing.webdrivermanager.WebDriverManager;
-import io.restassured.http.Cookies;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 
-class SetupJmeter {
-
-    //LOGIN URLS
-    protected static String testEnvUsr;
-    protected static String testEnvPwd;
-    private static Cookies restCookies;
-
+class SetupJmeter extends GeneralTest {
 
     /**
      * Retrieves credentials either by using maven properties (-DtestEnvUsr=admin), or by secrets file.
@@ -23,22 +16,10 @@ class SetupJmeter {
      */
     @BeforeAll
     static void setUpJmeterTest() {
-
-        //First attempt to retrieve maven properties
-        testEnvUsr = System.getProperty("testEnvUsr");
-        testEnvPwd = System.getProperty("testEnvPwd");
-
-        /*
-            If no maven properties are passed in the command (i.e. local run),
-            set test environment username and pass from secrets file.
-         */
-        if (testEnvUsr == null) {
-            testEnvUsr = FileHelper.getProperty("test.usr");
-            testEnvPwd = FileHelper.getProperty("test.pwd");
-        }
-
         WebDriver driver = WebDriverManager.getRemoteChromeDriver();
         driver.get(Constants.applicationUrl);
+
+        System.out.println(testEnvPwd);
 
         new LoginPage(driver).login(testEnvUsr, testEnvPwd);
         WebDriverManager.setCookiesInJmeterFormat(driver);

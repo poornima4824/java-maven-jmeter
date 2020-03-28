@@ -1,5 +1,7 @@
 package examples.testing.api;
 
+import examples.testing.GeneralTest;
+import examples.testing.abstraction.LoginPage;
 import examples.testing.webdrivermanager.WebDriverManager;
 import io.restassured.http.Cookies;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,7 +11,7 @@ import org.openqa.selenium.WebDriver;
 import static examples.testing.Constants.applicationUrl;
 import static io.restassured.RestAssured.given;
 
-public class ApiTests {
+public class ApiTests extends GeneralTest {
 
     private static Cookies restCookies;
 
@@ -20,7 +22,12 @@ public class ApiTests {
     @BeforeAll
     static void setupApiTests() {
         WebDriver driver = WebDriverManager.getRemoteChromeDriver();
+        driver.get(applicationUrl);
+        new LoginPage(driver).login(testEnvUsr, testEnvPwd);
         restCookies = WebDriverManager.getCookies(driver);
+
+        driver.close();
+        driver.quit();
     }
 
 
@@ -30,7 +37,7 @@ public class ApiTests {
     @Test
     void exampleRestApiTest() {
         given().cookies(restCookies)
-                .when().get(applicationUrl)
+                .when().get(applicationUrl) //TODO: Add API endpoint to URL for which authentication is necessary
                 .then().assertThat()
                 .statusCode(200);
 
