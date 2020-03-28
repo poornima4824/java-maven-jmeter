@@ -4,7 +4,9 @@ pipeline {
     // This can be useful when you want to run builds with periodic triggers using cron jobs.
 
     //Agent will differ per assignment
-    agent { label 'jenkins-maven' }
+    agent {
+        docker { image '3.6-jdk-8-slim' }
+    }
 
     //Credentials should be added in Jenkins
     environment {
@@ -15,7 +17,7 @@ pipeline {
         stage('Performance test...') {
             steps {
                 //Run tests
-                sh("mvn clean verify -P choose-jmx-file -DjmxFile=examples-polteq-performance-test -DtestEnvUsr=${env.TEST_ENV_USR} -DtestEnvPwd=${env.TEST_ENV_PSW}")
+                sh("mvn clean verify -P choose-jmx-file -DjmxFile=examples-performance-test -DtestEnvUsr=${env.TEST_ENV_USR} -DtestEnvPwd=${env.TEST_ENV_PSW}")
             }
         }
     }
@@ -23,7 +25,6 @@ pipeline {
         //Archive artifacts is a plugin that enables you to store for instance the target folder of a build.
         //PerfReport is a plugin that can be added to Jenkins, making nice graphs and showing trends.
         always {
-            archiveArtifacts artifacts: 'target/**/*.*', excludes: 'target/test-classes/**/*.*', fingerprint: true
             perfReport sourceDataFiles: 'target/jmeter/results/*.csv'
         }
     }

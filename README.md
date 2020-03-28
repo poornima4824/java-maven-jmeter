@@ -42,10 +42,40 @@ java -jar selenium-server-standalone-3.141.59.jar -role node
 ```
 _Note: these commands need a separate terminal window because the processes will keep running._
 
-3. Run the application using the selenium profile:
+3. Include credentials
+There are two possible ways of including credentials. The first way is to include them in the command using maven properties 'testEnvUsr' and 'testEnvPwd', i.e.
 ```
-mvn clean verify -P exclude-selenium -DjmxFile=examples-my-
+mvn clean verify -P include-selenium -DjmxFile=examples-test-my-application -DtestEnvUsr=admin -DtestEnvPwd=admin
+```
 
+The second way is to create a file called secrets.properties. Copy the file called 'secrets.properties.temp' and rename it to 'secrets.properties'. Then enter the credentials in this file using the 'test.usr' and 'test.pwd' lines.
+
+4. Run the application using the selenium profile:
+With or without credentials as maven properties:
+```
+mvn clean verify -P include-selenium -DjmxFile=examples-test-my-application -DtestEnvUsr=admin -DtestEnvPwd=admin
+mvn clean verify -P include-selenium -DjmxFile=examples-test-my-application
+```
+_Note: the project uses a remote ChromeDriver. Feel free to use your own preferred variant of WebDriver if necessary._
+
+## Results
+After a successful execution of the performance test(s), results will be present in the **target/jmeter/results** folder.
+
+## Integration with Jenkins
+One of the benefits of the maven JMeter plugin, is that it is easily integrated in CI, such as Jenkins. 
+There are two Jenkinsfiles already present in the project, one in which the JMX file can be specified as a parameter in Jenkins, and one in which the JMX file is fixed.
+In order to use these Jenkinsfiles in your jenkins environment, follow these steps:
+
+- (If using authentication) Add valid credentials of your test environment as Jenkins credentials. 
+The ID of these credentials has to correspond with the value of the TEST_ENV parameter in the jenkinsfile, i.e. if you add the credentials with ID 'testEnv', make sure the 'environment' part of your jenkinsfile includes the following:
+```
+environment {
+    TEST_ENV = credentials('testEnv')
+}
+```
+- Create a new pipeline or multi-branch pipeline job in jenkins and set the script path to the coresponding Jenkinsfile, 
+i.e. to use the 'Jenkinsfile-fixed-jmx-file' Jenkinsfile, your jenkins 'Build configuration' should look like this:
+![Jenkins build configuration](./readme-images/jenkins-script-path.png)
 
 
 

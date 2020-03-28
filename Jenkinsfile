@@ -4,11 +4,13 @@ pipeline {
     parameters {
         string(name: "jmxFile",
                 description: "What JMeter performance test file (jmx) would you like to execute?",
-                defaultValue: 'examples-polteq-performance-test')
+                defaultValue: 'examples-performance-test')
     }
 
     //Agent will differ per assignment
-    agent { label 'jenkins-maven' }
+    agent {
+        docker { image '3.6-jdk-8-slim' }
+    }
 
     //Credentials should be added in Jenkins
     environment {
@@ -27,7 +29,6 @@ pipeline {
         //Archive artifacts is a plugin that enables you to store for instance the target folder of a build.
         //PerfReport is a plugin that can be added to Jenkins, making nice graphs and showing trends.
         always {
-            archiveArtifacts artifacts: 'target/**/*.*', excludes: 'target/test-classes/**/*.*', fingerprint: true
             perfReport sourceDataFiles: 'target/jmeter/results/*.csv'
         }
     }
