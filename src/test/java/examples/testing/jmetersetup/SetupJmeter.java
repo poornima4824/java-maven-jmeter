@@ -1,9 +1,9 @@
-package examples.polteq.jmetersetup;
+package examples.testing.jmetersetup;
 
-import examples.polteq.Constants;
-import examples.polteq.abstraction.LoginPage;
-import examples.polteq.helpers.FileHelper;
-import examples.polteq.webdrivermanager.WebDriverManager;
+import examples.testing.Constants;
+import examples.testing.abstraction.LoginPage;
+import examples.testing.helpers.FileHelper;
+import examples.testing.webdrivermanager.WebDriverManager;
 import io.restassured.http.Cookies;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

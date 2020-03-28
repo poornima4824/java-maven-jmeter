@@ -1,4 +1,4 @@
-package examples.polteq.webdrivermanager;
+package examples.testing.webdrivermanager;
 
 import io.restassured.http.Cookies;
 import org.openqa.selenium.Cookie;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static examples.polteq.Constants.hubUrl;
+import static examples.testing.Constants.hubUrl;
 
 public class WebDriverManager {
 

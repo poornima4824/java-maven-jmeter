@@ -1,4 +1,4 @@
-package examples.polteq;
+package examples.testing;
 
 public class Constants {
 
@@ -6,5 +6,5 @@ public class Constants {
     public static final String hubUrl = "http://localhost:4444/wd/hub";
 
     //URL to go to the login screen of your application
-    public static final String applicationUrl = "https://techblog.polteq.com/";
+    public static final String applicationUrl = "https://google.com/";
 }

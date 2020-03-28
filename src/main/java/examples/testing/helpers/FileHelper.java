@@ -1,4 +1,4 @@
-package examples.polteq.helpers;
+package examples.testing.helpers;
 
 import java.io.File;
 import java.io.FileInputStream;

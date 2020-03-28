@@ -1,12 +1,12 @@
-package examples.polteq.api;
+package examples.testing.api;
 
-import examples.polteq.webdrivermanager.WebDriverManager;
+import examples.testing.webdrivermanager.WebDriverManager;
 import io.restassured.http.Cookies;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 
-import static examples.polteq.Constants.applicationUrl;
+import static examples.testing.Constants.applicationUrl;
 import static io.restassured.RestAssured.given;
 
 public class ApiTests {

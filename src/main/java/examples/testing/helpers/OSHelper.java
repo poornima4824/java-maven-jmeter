@@ -1,4 +1,4 @@
-package examples.polteq.helpers;
+package examples.testing.helpers;
 
 public class OSHelper {
 
