@@ -9,6 +9,11 @@ pipeline {
 
     //Agent will differ per assignment
     agent any
+	
+	  tools
+    {
+       maven "maven"
+    }
 
     //Credentials should be added in Jenkins
     environment {
