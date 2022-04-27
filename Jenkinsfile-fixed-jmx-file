@@ -5,16 +5,11 @@ pipeline {
 
     //Agent will differ per assignment
     agent any
-    //Credentials should be added in Jenkins
-    environment {
-        TEST_ENV = credentials('git')
-    }
-
     stages {
         stage('Performance test...') {
             steps {
                 //Run tests
-                sh("mvn clean verify -P choose-jmx-file -DjmxFile=examples-performance-test -DtestEnvUsr=${env.TEST_ENV_USR} -DtestEnvPwd=${env.TEST_ENV_PSW}")
+                sh("mvn clean verify -P choose-jmx-file -DjmxFile=examples-performance-test")
             }
         }
     }
