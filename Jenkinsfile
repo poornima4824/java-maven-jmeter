@@ -19,7 +19,7 @@ pipeline {
         stage('Performance test...') {
             steps {
                 //Run tests
-                sh("mvn clean verify -P choose-jmx-file -DjmxFile=${jmxFile} -DtestEnvUsr=${env.TEST_ENV_USR} -DtestEnvPwd=${env.TEST_ENV_PSW}")
+                sh("mvn clean verify -P Jenkinsfile-fixed-jmx-file -DjmxFile=${jmxFile} -DtestEnvUsr=${env.TEST_ENV_USR} -DtestEnvPwd=${env.TEST_ENV_PSW}")
             }
         }
     }
