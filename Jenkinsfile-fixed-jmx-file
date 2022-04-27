@@ -4,13 +4,10 @@ pipeline {
     // This can be useful when you want to run builds with periodic triggers using cron jobs.
 
     //Agent will differ per assignment
-    agent {
-        any
-    }
-
+    agent any
     //Credentials should be added in Jenkins
     environment {
-        TEST_ENV = credentials('testEnv')
+        TEST_ENV = credentials('git')
     }
 
     stages {
