@@ -8,13 +8,11 @@ pipeline {
     }
 
     //Agent will differ per assignment
-    agent {
-        docker { image '3.6-jdk-8-slim' }
-    }
+    agent any
 
     //Credentials should be added in Jenkins
     environment {
-        TEST_ENV = credentials('testEnv')
+        TEST_ENV = credentials('git')
     }
 
     stages {
