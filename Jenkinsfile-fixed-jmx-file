@@ -5,6 +5,10 @@ pipeline {
 
     //Agent will differ per assignment
     agent any
+    tools
+ {
+      maven 'maven'
+ }  
     stages {
         stage('Performance test...') {
             steps {
